@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Find Movie</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="./style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <form action="/movies/foundmovie" method="GET">
+            <label for="title">Movie Title</label><br />
+            <input type="text" name="title" placeholder="title"><br />
+            <button type="submit">Find a Movie</button>
+        </form>
+        <% if (title !== null) { %>
+        <hr />
+        <h1>Update <%= title.title %> </h1>
+        <form action="/movies/<%= title.title %>?_method=PUT" method="POST">
+            <label for="rating">Rating -</label>
+            <input type="text" name="rating" placeholder="<%= title.rating %> "><br />
+            <label for="synopsis">Synopsis -</label>
+            <input type="text" name="synopsis" placeholder="<%= title.synopsis %> "><br />
+            <label for="releaseYear">Release Year -</label>
+            <input type="text" name="releaseYear" placeholder="<%= title.releaseYear %> "><br />
+            <label for="genre">Genre -</label>
+            <input type="text" name="genre" placeholder="<%= title.genre[0] %> ">
+            <input type="text" name="genre" placeholder="<%= title.genre[1] %> "><br />
+            <label for="director">Director -</label>
+            <input type="text" name="director" placeholder="<%= title.director %> "><br />
+            <label for="boxOffice">Box Office in USD -</label>
+            <input type="text" name="boxOffice" placeholder="<%= title.boxOffice %> "><br />
+            <label for="image">Image -</label>
+            <input type="text" name="image" placeholder="<%= title.image %> "><br />
+            <button type="submit">Update a Movie</button>
+        </form>
+        <% } %>
+    </body>
+</html>

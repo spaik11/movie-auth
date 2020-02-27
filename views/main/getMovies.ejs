@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Movies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+    <h1>Movies</h1>
+    <% if (movies) { for (const movie of movies) {%>
+        <img src=/images/<%= movie.image %> alt="" style='max-width:100px'> 
+        <h2><%= movie.title %> </h2>
+        <p>Rating: <%= movie.rating %> </p>
+        <p>Synopsis: <%= movie.synopsis %> </p>
+        <p>Release Year: <%= movie.releaseYear %> </p>
+        <p>Genre: <%= movie.genre[0] %>, <%= movie.genre[1] %> </p>
+        <p>Director: <%= movie.director %> </p>
+        <p>Box Office: <%= movie.boxOffice/1000000000 %> billion USD </p>
+        <form action="/movies/<%= movie.title %>?_method=DELETE" method="POST">
+            <button type="submit">Delete Movie</button>
+        </form>
+        <hr />
+    <% }} %>
+    </body>
+</html>
