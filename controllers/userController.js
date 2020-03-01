@@ -1,11 +1,9 @@
+const passport = require('passport');
 const User = require('../models/Users');
 const bcrypt = require('bcryptjs');
 
 module.exports = {
     home: (req, res) => {
-        if (req.isAuthenticated()) {
-            return res.render('main/getMovies');
-        }
         return res.render('main/login');
     },
 
@@ -38,7 +36,13 @@ module.exports = {
                 .catch(err => reject(err));
         })
         .catch((err) => res.status(418).json({ message: 'App is broken', err }));
-    },    
+    },
+    
+    login: passport.authenticate('local-login', {
+        successRedirect: '/movies/home',
+        failureRedirect: '/',
+        failureFlash: true
+    }),
 
     logout: (req, res) => {
         req.session.destroy();

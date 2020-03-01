@@ -2,22 +2,21 @@ const Movie = require('../models/Movies');
 
 module.exports = {
     home: (req, res) => {
-        if (req.isAuthenticated()) {
-            return res.render('main/movieHome');
-        }
-        return res.render('main/error');
+        if (!req.isAuthenticated()) return res.render('error');
+        return res.render('main/movieHome');
+    },
+
+    getAddMovie: (req, res) => {
+        res.render('main/addMovie');
     },
 
     viewMovie: (req, res) => {
-        if (req.user === undefined) return res.render('error');
-
         Movie.find({})
             .then((movies) => res.render('main/getMovies', { movies }))
             .catch((err) => res.status(500).json({ message: 'Server error', err }));
     },
 
     findMovie: (req, res) => {
-        if (req.user === undefined) return res.render('error');
         res.render('main/findMovie', { title: null });
     },
 
@@ -54,7 +53,7 @@ module.exports = {
             newMovie.rating = rating;
             newMovie.synopsis = synopsis;
             newMovie.releaseYear = releaseYear;
-            newMovie.genre = genre;
+            newMovie.genre = genre.join(',').toLowerCase().split(',');
             newMovie.director = director;
             newMovie.boxOffice = boxOffice;
             newMovie.image = image;
@@ -68,8 +67,6 @@ module.exports = {
     },
 
     updateMovie: (req, res) => {
-        if (req.user === undefined) return res.render('error');
-
         Movie.findOne({ title: req.params.title })
         .then((movie) => {
             const { title, rating, synopsis, releaseYear, genre, director, boxOffice, image } = req.body;
@@ -79,7 +76,7 @@ module.exports = {
                 movie.rating = rating ? rating : movie.rating;
                 movie.synopsis = synopsis ? synopsis : movie.synopsis;
                 movie.releaseYear = releaseYear ? releaseYear : movie.releaseYear;
-                movie.genre = genre ? genre : movie.genre;
+                movie.genre = genre ? genre.join(',').toLowerCase().split(',') : movie.genre.join(',').toLowerCase().split(',');
                 movie.director = director ? director : movie.director;
                 movie.boxOffice = boxOffice ? boxOffice : movie.boxOffice;
                 movie.image = image ? image : movie.image;

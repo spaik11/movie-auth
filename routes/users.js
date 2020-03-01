@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
-const userController = require('../controllers/userController');
 require('../lib/passport');
+
+const { 
+  home, 
+  logout, 
+  register, 
+  login 
+} = require('../controllers/userController');
 
 const myValidation = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -10,15 +15,9 @@ const myValidation = (req, res, next) => {
   next();
 };
 
-router.get('/', userController.home);
-router.get('/logout', userController.logout);
-router.post('/register', myValidation, userController.register);
-router.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/movies/home',
-  failureRedirect: '/',
-  failureFlash: true
-  })
-);
-
+router.get('/', home);
+router.get('/logout', logout);
+router.post('/register', myValidation, register);
+router.post('/login', login);
 
 module.exports = router;
