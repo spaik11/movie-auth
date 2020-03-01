@@ -76,11 +76,11 @@ module.exports = {
                 movie.rating = rating ? rating : movie.rating;
                 movie.synopsis = synopsis ? synopsis : movie.synopsis;
                 movie.releaseYear = releaseYear ? releaseYear : movie.releaseYear;
-                movie.genre = genre ? genre.join(',').toLowerCase().split(',') : movie.genre.join(',').toLowerCase().split(',');
+                movie.genre = genre ? genre.join(',').toLowerCase().split(',') : movie.genre;
                 movie.director = director ? director : movie.director;
                 movie.boxOffice = boxOffice ? boxOffice : movie.boxOffice;
                 movie.image = image ? image : movie.image;
-
+                
             movie
                 .save()
                 .then((updated) => res.status(200).json({ message: 'Movie updated', updated }))
