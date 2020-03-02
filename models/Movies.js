@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-// create blueprint for inputs into database
-// word will have type string, must be unique, have default, convert to lowercase
-// definition will be type string, to lowercase, and have a default
 const MovieSchema = new mongoose.Schema({
     title: { type: String, unique: true, default: '', lowercase: true, trim: true },
     rating: { type: String, default: '', trim: true },
